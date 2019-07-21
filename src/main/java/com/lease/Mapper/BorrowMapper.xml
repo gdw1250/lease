@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.lease.Mapper.BorrowMapper">
+ <!-- <include refid="userModelColumns" />   -->
+ 
+ 
+  <!-- <resultMap id="BaseResultMap" type="com.xdd.entity.User" >
+        <id column="id" property="u_id" jdbcType="VARCHAR" />
+        <result column="name" property="u_name" jdbcType="VARCHAR" />
+        <result column="password" property="u_password" jdbcType="VARCHAR" />
+        <result column="sex" property="u_sex" jdbcType="CHAR"/>
+        <result column="email" property="u_email" jdbcType="VARCHAR"/>
+        <result column="sex" property="u_sex" jdbcType="CHAR"/>
+    </resultMap> -->
+    <sql id="borrowColumnList" >
+        	out_trade_no, username,goodid, borrowtime,depositMoney,  total_amount,  subject, body,status,deposit,amount
+    </sql>
+     
+
+    <!-- 添加订单 -->
+    <insert id="addOrderfrom" parameterType="com.lease.Model.Borrow" >
+        insert into borrow(<include refid="borrowColumnList"/> ) value(#{out_trade_no},#{username},#{goodid},#{borrowtime},#{depositMoney},#{total_amount},#{subject},#{body},0,#{deposit},#{amount}) 
+    </insert> 
+    <!-- 根据用户名查询未完成订单 -->
+    <select id="selectByNotreturn" resultType="Borrow" parameterType="String">  
+        SELECT  out_trade_no, borrow.username,borrow.goodid, borrowtime,depositMoney,  total_amount,  subject, body,borrow.status,borrow.deposit,amount,image FROM borrow,goods where borrow.username=#{username} and borrow.status=0 and  borrow.goodid = goods.goodid
+    </select>
+   <!-- 根据用户名查已完成订单 -->
+    <select id="selectByEnd" resultType="Borrow" parameterType="String">  
+        SELECT out_trade_no, borrow.username,borrow.goodid, borrowtime,repey,depositMoney,  total_amount,  subject, body,borrow.status,borrow.deposit,amount,image FROM borrow,goods where borrow.username=#{username} and borrow.status=1 and borrow.goodid = goods.goodid
+    </select>
+    <!-- 根据id订单 -->
+    <select id="borrowById" resultType="Borrow" parameterType="String">  
+        SELECT * FROM borrow,goods where out_trade_no=#{out_trade_no}
+    </select>
+    <!-- 根据id更新订单信息 -->
+    <update id="updateBorrowByID" parameterType="com.lease.Model.Borrow">   	
+		update borrow set repey=#{repey},depositMoney=#{depositMoney},total_amount=#{total_amount},status=1,amount=#{amount},deposit=#{deposit} where out_trade_no=#{out_trade_no}
+    </update>
+</mapper>

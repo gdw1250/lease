@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>hellowerld!</h2>
+<div>
+<p th:text="${user.username}">还未登录</p>
+     <ul>
+         <li  th:each="user:${users}">
+             <span th:text="${user.username}">战争</span>-
+             
+             <span th:text="${user.sex}">和平</span>
+         </li>
+     </ul>
+   </div>
+
+</body>
+</html>

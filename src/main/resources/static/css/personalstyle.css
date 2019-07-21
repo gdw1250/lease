@@ -1,0 +1,27 @@
+
+/* 订单信息图片样式 */
+.perimg {
+    border-radius: 5px;
+    width: 220px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.img-container{
+     width: 100%;
+     max-height: 300px;
+ }
+ .preview{
+
+  border: 1px rgb(220, 220, 220) solid;
+   width: 160px;
+   height: 120px;
+   overflow: hidden;
+ }
+ 
+ .goodsimg{
+  width: 200px;
+  height: 150px;
+ }
+ 
+ 

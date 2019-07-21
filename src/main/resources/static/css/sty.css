@@ -1,0 +1,58 @@
+.btu_distance{
+    margin: 10px;
+}
+.img_width{
+    width: 100px;
+    height: 100px;
+}
+.mapping_top{
+    margin-top: 20px;
+}
+.mapping_leftandright{
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.Comment_img_width{
+    width: 40px;
+     height: 40px;
+}
+.box_inline{
+    display: inline;
+}
+.font_size{
+    font-size: 24px;
+}
+
+.li_mapping li{
+    margin: 10px;
+}
+.img_width_own{
+    width: 80px;
+    height: 80px;
+}
+div{border:1px rgb(95, 95, 95); }
+.own-info{
+    background-color:rgb(0, 0, 146);
+    color: azure;
+    padding: 10px;
+    font-size: 18px;
+}
+.tab-pane{
+    padding: 15px;
+    background-color:#fff;
+    border: 1px rgb(206, 204, 204) solid;
+    
+
+}
+
+.goodsList{
+	background-color: white;
+}
+/* 物品列表间距 */
+.listmap{
+	padding-left:20px;
+	padding-right:30px;
+}
+.text_li{
+	font-size:18px;
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>租赁系统登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrapValidator.css">	
+	<script src="js/jquery-2.1.4.min.js"></script>
+	
+
+    <style>
+        body{
+	         background:url("images/bg.jpg");
+	         background-repeat: no-repeat;
+	         background-size: cover;
+        }
+        [class="container"]{
+            background-color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        [class="nav nav-tabs"]{
+
+        }
+        form{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+ <h1 style="text-align: center;color:skyblue" >迎光租赁系统</h1>
+        <div class="container">
+       
+            <div class="center-block" id="page">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">登陆</a></li>
+                  <li role="presentation"><a href="#register" aria-controls="register" role="tab" data-toggle="tab">注册</a></li>
+                </ul>
+              
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="login">
+                        <form class="form-horizontal" id="loginform" action="login" method="POST">
+								<div class="form-group">
+									<label for="inputanem" class="col-sm-2 control-label"></label>
+									<div class="col-sm-8">
+									<input type="text" class="form-control" name="username" id="username" placeholder="用户名">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword" class="col-sm-2 control-label"></label>
+									<div class="col-sm-8">
+									<input type="password" class="form-control" name="password" id="password" placeholder="Password">
+									</div>
+								</div>								
+								<div class="form-group">
+									<div class=" col-sm-12">
+									<button type="submit" class="btn btn-info center-block" id="loginbtn">登录</button>
+									
+									</div>
+									<hr>
+
+								</div>
+						</form>
+                  </div>
+
+
+
+                  <div role="tabpanel" class="tab-pane" id="register">
+                        <form class="form-horizontal" id="registerform">
+                                <div class="form-group">
+                                  <label for="inputname2" class="col-sm-2 control-label">姓名</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="username"  placeholder="请输入3~8用户名">
+                                  </div>
+                                  <p class="col-sm-2 hidden" id="namewrong"></p>
+                                </div>
+
+
+                                <div class="form-group">
+                                  <label for="inputPassword2" class="col-sm-2 control-label">密码</label>
+                                  <div class="col-sm-8">
+                                    <input type="password" class="form-control" name="password"  placeholder="Password">
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                        <label for="inputPassword3" class="col-sm-2 control-label">确认密码</label>
+                                        <div class="col-sm-8">
+                                          <input type="password" class="form-control" name="password2" placeholder="Password">
+                                        </div>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                        <label  class="col-sm-2 control-label">性别</label>
+                                         <label class="radio-inline col-sm-offset-1">
+                                    
+                                            <input type="radio" name="sex" id="inlineRadio1" value="男"> 男
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="sex" id="inlineRadio2" value="女"> 女
+                                        </label>
+                                </div>
+
+                                <div class="form-group">
+                                        <label for="inputemail" class="col-sm-2 control-label">邮箱</label>
+                                        <div class="col-sm-8">
+                                          <input type="email" class="form-control" name="email" placeholder="email">
+                                        </div>
+                                </div>
+
+                                <div class="form-group">
+                                        <label for="inputtel" class="col-sm-2 control-label">电话</label>
+                                        <div class="col-sm-8">
+                                          <input type="tel" class="form-control" name="tel" placeholder="tel">
+                                        </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                        <label for="inputtel" class="col-sm-2 control-label">地址</label>
+                                        <div class="col-sm-8">
+                                          <input type="text" class="form-control" name="address" placeholder="地址">
+                                        </div>
+                                </div>
+                                
+                                
+                                <div class="form-group">
+                                  <div class="col-sm-offset-2 col-sm-8">
+                                    <button type="button" class="btn btn-info center-block" id="registerbtn">注册</button>
+                                  </div>
+                                </div>
+                              </form>
+                  </div> 
+                </div>
+            </div>
+         </div>
+    
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrapValidator.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.lease.Mapper.GoodsMapper">
+ <!-- <include refid="userModelColumns" />   -->
+ 
+ 
+  <!-- <resultMap id="BaseResultMap" type="com.xdd.entity.User" >
+        <id column="id" property="u_id" jdbcType="VARCHAR" />
+        <result column="name" property="u_name" jdbcType="VARCHAR" />
+        <result column="password" property="u_password" jdbcType="VARCHAR" />
+        <result column="sex" property="u_sex" jdbcType="CHAR"/>
+        <result column="email" property="u_email" jdbcType="VARCHAR"/>
+        <result column="sex" property="u_sex" jdbcType="CHAR"/>
+    </resultMap> -->
+    <sql id="GoodsColumnList" >
+        goodid,username,goodname,goodsnumber,detail,price,image,deposit
+    </sql>
+    <!-- 查询所有物品 -->
+   <select id="selectAllGoods" resultType="Goods">  
+       select * FROM goods  where status=1
+    </select>
+    <!-- 根据id差物品 -->
+    <select id="selectGoodsByGoodid" resultType="Goods">
+    	select * from goods where goodid=#{goodid} and status=1
+    </select>
+    
+    <!-- 查询最新十条物品 -->
+    <select id="selectTenGoods" resultType="Goods">
+    	select * from goods where  status=1 ORDER BY uptime Desc LIMIT 5;
+    </select>
+    
+     <!-- 添加物品 -->
+    <insert id="upgoods" parameterType="com.lease.Model.User" >
+        insert into goods(<include refid="GoodsColumnList"></include>) value(#{goodid},#{username},#{goodname},#{goodsnumber},#{detail},#{price},#{image},#{deposit})
+    </insert> 
+    
+    <!-- 根据用户名获得物品 -->
+   <select id="getUserGoods" resultType="Goods" parameterType="String">  
+        SELECT  <include refid="GoodsColumnList"/>,uptime,status,notify FROM goods where username=#{username}
+    </select>
+    <!-- 删除物品 -->
+    <!-- <delete id="deleteUserGoods"  parameterType="String" >
+        delete from goods where goodid = #{goodid}
+    </delete> -->
+    <update id="deleteUserGoods" parameterType="String">   	
+		update  goods set status=0 where goodid=#{goodid}
+    </update>
+    <!-- 修改物品信息 -->
+    <update id="updateUserGoods" parameterType="com.lease.Model.Goods">   	
+		update  goods set goodname=#{goodname},goodsnumber=#{goodsnumber},detail=#{detail},price=#{price},deposit=#{deposit},status=3 where goodid=#{goodid}
+    </update>
+    <!-- 减库存 -->
+    <update id="subGoodsNumber" parameterType="String">   	
+		update goods set goodsnumber=goodsnumber - 1 where goodid=#{goodid} and goodsnumber>0
+    </update>
+    <!-- 加库存 -->
+    <update id="addGoodsNumber" parameterType="String">   	
+		update goods set goodsnumber=goodsnumber + 1 where goodid=#{goodid} 
+    </update>
+    
+    <!-- 排序商品 -->
+    <select id="updataGoodsList" resultType="Goods" parameterType="String">  
+       select * from  goods where status = 1 ORDER BY ${sign} 
+    </select>
+    
+    <!-- 搜索商品 -->
+     <select id="selectGoods" resultType="Goods" parameterType="String">  
+       select * from goods where username like CONCAT('%',#{selectStr},'%') or goodname like CONCAT('%',#{selectStr},'%') and status=1
+    </select>
+    
+    <!-- 查询等待审核的商品 -->
+     <select id="goodsApply" resultType="Goods" parameterType="String">  
+       select * from goods where status = 3
+    </select>
+     <!-- 查询已审核过的商品 -->
+    <select id="goodsAlready" resultType="Goods" parameterType="String">  
+       select * from goods where status != 3
+    </select>
+     <!-- 同意物品上传 -->
+    <update id="agree" parameterType="String">   	
+		update goods set status=1 where goodid=#{goodid} 
+    </update>
+    
+     <!-- 不同意物品上传 -->
+    <update id="refuse" parameterType="String">   	
+		update goods set status=2,notify=#{notify} where goodid=#{goodid} 
+    </update>
+    
+   <!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from user_t
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.xdd.entity.User" >
+        insert into user_t (id, user_name, password,
+        age)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER})
+    </insert>
+   -->
+</mapper>

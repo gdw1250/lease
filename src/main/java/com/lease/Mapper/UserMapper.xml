@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.lease.Mapper.UserMapper">
+ <!-- <include refid="userModelColumns" />   -->
+
+ 
+  <!-- <resultMap id="BaseResultMap" type="com.xdd.entity.User" >
+        <id column="id" property="u_id" jdbcType="VARCHAR" />
+        <result column="name" property="u_name" jdbcType="VARCHAR" />
+        <result column="password" property="u_password" jdbcType="VARCHAR" />
+        <result column="sex" property="u_sex" jdbcType="CHAR"/>
+        <result column="email" property="u_email" jdbcType="VARCHAR"/>
+        <result column="sex" property="u_sex" jdbcType="CHAR"/>
+    </resultMap> -->
+    <sql id="userColumnList" >
+        	userid, username, password, sex,email,tel,address
+    </sql>
+   <select id="selectAllUser" resultType="User">  
+        SELECT  * FROM users
+    </select>
+    <!-- 根据id差用户 -->
+    <select id="userByID" resultType="User" parameterType="String">  
+        SELECT   userid, username, sex,email,tel,address,image,money FROM users where userid=#{userid}
+    </select>
+    
+    <!--  用户登录-->
+    <select id="userLogin" resultType="User" parameterType="String">
+    	SELECT  userid, username, sex,email,tel,address,image,money FROM users where username = #{username} and password=#{password}
+    </select>
+    
+    
+    <!--  管理员登录-->
+    <select id="adminLogin" resultType="User" parameterType="String">
+    	SELECT  userid, username, sex,email,tel,address,image,money FROM users where username = #{username} and password=#{password} and power=1
+    </select>
+    
+    <!-- 用户注册 -->
+    <insert id="adminAddUser" parameterType="com.lease.Model.User" >
+        insert into users(<include refid="userColumnList" />) value(#{userid},#{username},#{password},#{sex},#{email},#{tel},#{address})
+    </insert> 
+    
+    <!-- 用户注册 -->
+    <insert id="userregister" parameterType="com.lease.Model.User" >
+        insert into users(userid,username,password,sex,email,tel,address,power) value(#{userid},#{username},#{password},#{sex},#{email},#{tel},#{address},#{power})
+    </insert> 
+    
+    <!-- 用户名称重复验证 --> 
+    <select id="vaildatename" resultType="int" parameterType="String">
+    	SELECT  count(*) FROM users where username = #{username}
+    </select>
+    <!-- 查询账户信息 -->
+     <select id="selectmoneybyname" resultType="float" parameterType="String">
+    	SELECT  money FROM users where username = #{username}
+    </select>
+    
+    <!-- 根据账单号查询用户信息 -->
+     <select id="selectUserByBillid" resultType="User" parameterType="String">
+    	SELECT  * FROM users where username = (select username from bill where billid = #{billid})
+    </select>
+    
+    <!-- 更改账户信息 -->
+    <update id="updataUserMoney" >
+    	
+		update users set money = #{money} where username=#{username}
+    </update>
+    <!--更改个人信息  -->
+    <update id="updataUser" parameterType="com.lease.Model.User">   	
+		update users set username=#{username},email=#{email},address=#{address},tel=#{tel} where userid=#{userid}
+    </update>
+    
+    <!-- 管理员修改用户信息 -->
+     <update id="updataEdituser" parameterType="com.lease.Model.User">   	
+		update users set username=#{username},email=#{email},address=#{address},tel=#{tel},sex=#{sex},power=#{power} where userid=#{userid}
+    </update>
+    <!-- 修改图片信息 -->
+    <update id="updataImg" >   	
+		update ignore users set image=#{image} where userid = #{userid}
+    </update>
+    
+    <!-- 账户充值 -->
+    <update id="recharge">
+    	update users set money = money+#{money} where username=#{username}
+    </update>
+    
+    
+    
+     <!-- 租借物品收入 -->
+    <update id="addMoneyByGoodid">
+    	update users set money = money+#{money} where username=(select username from goods where goodid=#{goodid})
+    </update>
+    
+    <!-- 批量删除用户 -->
+    <delete id="deleteUsers" >
+        delete from users
+        where userid in
+        <foreach collection="userids" item="userid" index="index" open="(" close=")" separator=",">
+        	#{userid}
+        </foreach>
+    </delete>
+    
+    <!-- 支付 -->
+    <update id="payMoney" >   	
+		update ignore users set money = money - #{price} where money >= #{price} and username=#{username}
+    </update>
+	
+   <!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from user_t
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.xdd.entity.User" >
+        insert into user_t (id, user_name, password,
+        age)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER})
+    </insert>
+   -->
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.lease.Mapper.ReplyMapper">
+
+     <insert id="insertReply" parameterType="com.lease.Model.Reply" >
+        insert into reply(replyId,username,commentid,replyUser,replyText) 
+        value(#{replyId},#{username},#{commentid},#{replyUser},#{replyText})
+    </insert> 
+    
+    <select id="selectReplyByComment" resultType="Reply">
+	
+	select reply.*,users.image
+	from reply,users
+	where commentid=#{commentid} 
+  	AND reply.username=users.username
+	order by replyTime DESC
+	</select>
+    <!-- 取消点赞 -->
+    <!-- <delete id="deleteNice" parameterType="String" >
+        delete from nice
+        where username=#{username}
+		and commentid=#{commentid}
+    </delete>
+    查询点赞状态
+	<select id="selectNiceStatus" resultType="int">
+	select count(niceid)
+	from nice 
+	where username=#{username}
+	and commentid=#{commentid}
+	</select> -->
+   
+</mapper>

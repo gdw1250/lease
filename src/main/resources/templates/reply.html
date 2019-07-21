@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <ul class="list-unstyled" th:fragment="replylist" >
+           <li th:each="reply:${replys}">
+            <div class="media clearfix">
+                <div class="media-left">
+                  <a href="#">
+                    <img class="img-circle Comment_img_width" src="images//1.jpg" alt="..." th:attr="src=${reply.image}">
+                  </a>
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading" th:text="${reply.username}+'  回复  '+${reply.replyUser}">用户名</h4>
+                  <hr>
+                 
+                <p th:text="${reply.replyText}">评论</p>
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <a th:onClick="replyFromShow(this)">回复<i class="glyphicon glyphicon-menu-up"></i></a>
+                    </div>
+                    <div class="pull-right">
+                        <time class="time" style="color:skyblue;"> <span th:text="${reply.replyTime}">2016-10-14</span></time>
+                        &nbsp;
+                        <a title="点赞" target="_blank" data-toggle="modal">
+                        
+                           <!--  <i class="glyphicon glyphicon-thumbs-up " style="color:rgb(255, 58, 58)" title="取消"  th:if="${comment.status}"></i>
+                            <i class="glyphicon glyphicon-thumbs-up " style="color:skyblue" title="点赞"  th:if="not ${comment.status}"></i> -->
+                            
+                        </a>
+                    </div>
+                    
+                </div>
+                
+                
+                <div class="input-group hide">
+                    <input type="text" class="form-control" placeholder="回复" th:attr="placeholder='回复   '+ ${reply.username}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" th:onClick="insertReply(this,[[${reply.commentid}]],[[${session.user.username}]],[[${reply.username}]])">提交</button>
+                    </span> 
+                </div>
+                      
+            </div>
+        </div>
+        <hr>
+    <li>
+       
+</ul>
+
+     
+    </body>
+</html>

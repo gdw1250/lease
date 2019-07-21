@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.lease.Mapper.CommentMapper">
+    <sql id="userColumnList" >
+        commentid,goodid,comment,username,commenttime,good,image
+    </sql>
+  
+    <!--  根据物品查评论-->
+    <select id="commentByGood" resultType="Comment" parameterType="String">
+    	<!-- select 
+    		commentid,goodid,comment,c.username,commenttime,good,image 
+    		from usercomment c,users u 
+    		where goodid=#{goodid} 
+    		and c.username=u.username 
+    		ORDER BY commenttime DESC -->
+    		
+    		select usercomment.commentid,goodid,usercomment.username,`comment`,commenttime,nicenumber,`STATUS`,image,replyCounted
+    		from usercomment LEFT JOIN (select commentid,STATUS from nice where username =#{username}) n 
+    		on usercomment.commentid=n.commentid ,users
+    		where goodid=#{goodid}
+    		and usercomment.username=users.username 
+    		ORDER BY commenttime DESC
+    </select>
+    
+     <select id="selectAllComment" resultType="Comment" parameterType="String">
+    	select * from usercomment
+    </select>
+    
+    <insert id="upcomment" parameterType="com.lease.Model.Comment" >
+        insert into usercomment(commentid,goodid,username,comment) value(#{commentid},#{goodid},#{username},#{comment}) 
+    </insert> 
+    
+    <update id="addcommentgood"  parameterType="String">
+     	update usercomment set good = good+1 where commentid=#{commentid};
+    </update>
+    
+    
+     <!-- 批量删除评论 -->
+    <delete id="deleteCommentMore" >
+        delete from usercomment
+        where commentid in
+        <foreach collection="commentids" item="commentid" index="index" open="(" close=")" separator=",">
+        	#{commentid}
+        </foreach>
+    </delete>
+   
+</mapper>
